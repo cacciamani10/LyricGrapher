@@ -18,14 +18,35 @@
     <div id="unique-selector">
         
     </div>
-    <form action="/search" method="get" id="genius-form" onsubmit="validate()">
+    <form action="/search" method="get" id="genius-form" >
         <label for="title">Title</label>
         <input type="text" name="title" id="title">
         <label for="artist">Artist</label>
         <input type="text" name="artist" id="artist">
         <input type="submit" value="Search">
     </form>
+    <script>
+        <% if(!lyrics) { let lyrics = '' } %>
+        let getLyrics = <%= lyrics %>;
+        console.log(getLyrics);
+        // if (typeof getLyrics !== 'undefined') {
+
+        //     let barC = new Chart(ctx1, {
+        //         type: 'bar',
+        //         data: data,
+        //         options: options
+        //     });
+        // }
+    </script>
     <canvas id="chart1" width="400" height="400"></canvas>
     <canvas id="chart2" width="400" height="400"></canvas>
+    <ul>
+        <% if(data !== null) {
+            data.forEach(song => {%> 
+                <li><%= JSON.stringify(song.title) %></li> 
+                <button onclick="addSong(' <%= song.url %> ')"></button>
+        <% })} %>
+    </ul>
+     
 </body>
 </html>

@@ -1,28 +1,54 @@
 const express = require('express');
-const api = require('genius-api');
-const fs = require('fs'); // Used for testing output
-const keys = require('./keys');
 const ejs = require('ejs');
+const bodyParser = require('body-parser');
+const search = require('./genius').search;
+const getLyricsData = require('./webScraper').getLyricsData;
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const genius = new api(keys.GENIUS_CLIENT_ACCESS_TOKEN);
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/resources'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-const search = async (artist, title) => {
-    genius.search().then(response => {
-        console.log('Found', response.hits.length, 'results');
-    })
-}
 app.get('/', (req, res) => {
-    res.render('index', {});
+    //search('Run The Jewels', '');
+    res.render(
+        'index', 
+        { 
+            data: null,
+            lyrics: null 
+        }
+    );
 });
 
-app.get('/', (req, res) => {
+app.get('/search', (req, res) => {
+    search(
+        req.query.title, 
+        req.query.artist, 
+        data => res.render(
+            'index', 
+            { 
+                data: data,
+                lyrics: null 
+            }
+        )
+    );
+})
 
+app.get('/song', (req, res) => {
+    // Finish imlpementing this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    getLyricsData(
+        decodeURI(req.query.url), 
+        lyrics => res.render(
+            'index', 
+            { 
+                data: null,
+                lyrics: lyrics 
+            }
+        )
+    );
 })
 
 app.listen(PORT);
-

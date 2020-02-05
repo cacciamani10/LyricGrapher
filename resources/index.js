@@ -1,11 +1,11 @@
-const validate = () => {
-    const artist = document.getElementById('artist').innerHTML;
-    const title = document.getElementById('title').innerHTML;
-    let ctx1 = document.getElementById('chart1').getContext('2d');
-    let ctx2 = document.getElementById('chart2').getContext('2d');
-}
+// const validate = () => {
+//     const artist = document.getElementById('artist').innerHTML;
+//     const title = document.getElementById('title').innerHTML;
+//     let ctx1 = document.getElementById('chart1').getContext('2d');
+//     let ctx2 = document.getElementById('chart2').getContext('2d');
+// }
 
-const showUniqueOption = (op) => {
+const showUniqueOption = op => {
     let uniq = document.getElementById('unique-selector');
     console.log(op, 'selected');
     if (op == 'two-chart') {
@@ -21,4 +21,10 @@ const showUniqueOption = (op) => {
             dropdown.parentElement.removeChild(dropdown);
         }
     }
+}
+
+const addSong = url => {
+    fetch(`/song?url=${encodeURIComponent(url)}`)
+        .then(jsnr => console.log(jsnr))
+        .catch(err => console.log(err));
 }
