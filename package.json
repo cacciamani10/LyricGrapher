@@ -1,0 +1,20 @@
+{
+  "name": "lyricgrapher",
+  "version": "1.0.0",
+  "description": "creates graphical representations of lyrics",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "test": "nodemon server"
+  },
+  "author": "Jacob Cacciamani",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "genius-api": "^0.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
