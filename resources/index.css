@@ -17,6 +17,11 @@ body {
     grid-row-end: 3;
 }
 
+.chart-selector-group {
+    grid-column-start: 0;
+    grid-row-start: row1-start;
+}
+
 .search-item {
     display: block;
     width: 40vw ;

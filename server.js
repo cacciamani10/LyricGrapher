@@ -13,26 +13,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.render(
-        'index', 
-        { 
-            data: null,
-            lyrics: null 
-        }
-    );
+    res.render('index');
 });
 
 app.get('/search', (req, res) => {
     search(
         req.query.title, 
         req.query.artist, 
-        data => res.render(
-            'index', 
-            { 
-                data: data,
-                lyrics: null 
-            }
-        )
+        data => res.json(data)
     );
 })
 

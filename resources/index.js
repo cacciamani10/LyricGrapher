@@ -5,30 +5,85 @@
 //     let ctx2 = document.getElementById('chart2').getContext('2d');
 // }
 
-const showUniqueOption = op => {
-    let uniq = document.getElementById('unique-selector');
-    console.log(op, 'selected');
-    if (op == 'two-chart') {
-        let content = document.createElement('div');
-        content.id = 'dropdown'
-        content.innerHTML = `<label for="unique">Unique Words Only</label> <input type="checkbox" name="unique" id="unique">`
-        uniq.insertAdjacentElement('afterbegin', content);
-    }
-    else {
-        console.log('False!')
-        let dropdown = document.getElementById('dropdown');
-        if (dropdown != null) {
-            dropdown.parentElement.removeChild(dropdown);
-        }
-    }
-}
-
 const addSong = url => {
     fetch(`/song?url=${encodeURIComponent(url)}`)
-        .then(jsnr => console.log(jsnr))
+        .then(jsnr => console.log(JSON.stringify(jsnr)))
         .catch(err => console.log(err));
 }
 
 const getThumbLink = uri => {
     return JSON.stringify(uri);
 }
+
+const search = (e) => {
+    e.preventDefault();
+    const title = document.getElementById('title').value;
+    const artist = document.getElementById('artist').value;
+    // Determine Which Input Fields Were Entered
+    let uri = '/search?';
+
+    if (title !== '') {
+        
+        if (artist !== '') {
+            uri += `title=${title}&artist=${artist}`;
+        }
+        else {
+            uri += `title=${title}`;
+        }
+    }
+    else {
+        if (artist !== '') {
+            uri += `artist=${artist}`;
+        }
+        else {
+            alert('Please enter in at least one field');
+            return;
+        }
+    }
+
+    fetch(uri)
+        .then(jsnr => {
+            if (jsnr.status != 200) {
+                console.log('Response Code:', jsnr.status);
+                return;
+            }
+            jsnr.json()
+            .then(searchResults => {
+                let ul = document.getElementById('search-results').innerHTML = "";
+                
+                searchResults.forEach(item => {
+                    ul += 
+                    `<div class="search-item">
+                        <img src="${item.thumbnail}" height="175" width="175" alt="Album thumbnail for ${item.artist}">
+                        <div class="title-artist">
+                            <li>${item.title}</li> 
+                            <li>${item.artist}</li>
+                        </div>
+                        <button class="add-button" onclick="addSong(${item.url})">+</button>
+                    </div>`
+                })
+            })
+        }).catch(err => console.log(err));
+
+}
+
+
+
+/*
+
+        <% if(data !== null) {
+            data.forEach(song => {%> 
+            <% let thumb = JSON.stringify(song.thumbnail) %>
+            <% let title = JSON.stringify(song.title) %>
+            <% let artist = JSON.stringify(song.artist) %>
+            <div class="search-item">
+                <img src="<%= song.thumbnail %>" height="175" width="175" alt="Album thumbnail for <%= artist %>">
+                <div class="title-artist">
+                    <li><%= title %></li> 
+                    <li><%= artist %></li>
+                </div>
+                <button class="add-button" onclick="addSong(' <%= song.url %> ')">+</button>
+            </div>
+        <% })} %>
+
+    */

@@ -9,7 +9,7 @@ exports.search = (title, artist, callback) => {
     // Search on title
     genius.search(title).then(titleResponse => {
         console.log('Found', titleResponse.hits.length, 'results from', title, 'query');
-        // console.log(titleResponse.hits[0].result);
+        //console.log(titleResponse.hits[0].result);
         // Add songs to list of potential songs
         titleResponse.hits.forEach(item => {
             songList.push({
