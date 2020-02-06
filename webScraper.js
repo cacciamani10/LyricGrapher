@@ -47,7 +47,7 @@ const getWordData = text => {
         }
         return 0;
     })
-    fs.writeFileSync('wordCount.json', JSON.stringify(results));
+    //fs.writeFileSync('wordCount.json', JSON.stringify(results));
 
     // Compile list of words into chart.js data object
     let labels = [];

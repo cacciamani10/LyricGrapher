@@ -10,8 +10,8 @@
     <title>Lyric Grapher</title>
 </head>
 <body>
-    <h1>Lyric Grapher</h1>
-    <p>Search for any song and </p>
+    <h1 class="title">Lyric Grapher</h1>
+    <p class="description">Search for any song and get a bar graph representation</p>
     <select name="compare" id="compare" onchange="showUniqueOption(this.value)">
         <option value="single-chart">Single Song</option>
         <option value="two-chart">Compare Songs</option>
@@ -19,27 +19,34 @@
     <div id="unique-selector">
         
     </div>
-    <form action="/search" method="get" id="genius-form" >
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title">
-        <label for="artist">Artist</label>
-        <input type="text" name="artist" id="artist">
-        <input type="submit" value="Search">
-    </form>
+    <div class="search-container">
+        <form action="/search" method="get" id="genius-form" autocomplete="off" class="search-form">
+            <label for="title" class="search-item">Title</label>
+            <input type="text" name="title" id="title" class="search-item">
+            <label for="artist" class="search-item">Artist</label>
+            <input type="text" name="artist" id="artist" class="search-item">
+            <input type="submit" value="Search" class="search-item search-btn">
+        </form>
+    </div>
     
-    <canvas id="chart1" width="400" height="400"></canvas>
-    <canvas id="chart2" width="400" height="400"></canvas>
-    <ul>
+    
+    <ul class="search-results">
         <% if(data !== null) {
             data.forEach(song => {%> 
             <% let thumb = JSON.stringify(song.thumbnail) %>
             <% let title = JSON.stringify(song.title) %>
+            <% let artist = JSON.stringify(song.artist) %>
             <div class="search-item">
-                <img src="<%= song.thumbnail %>" alt="Album thumbnail for <%= song.artist %>">
-                <li><%= title %></li> 
+                <img src="<%= song.thumbnail %>" height="175" width="175" alt="Album thumbnail for <%= artist %>">
+                <div class="title-artist">
+                    <li><%= title %></li> 
+                    <li><%= artist %></li>
+                </div>
                 <button class="add-button" onclick="addSong(' <%= song.url %> ')">+</button>
             </div>
         <% })} %>
     </ul>
+    <canvas id="chart1" width="0" height="0"></canvas>
+    <canvas id="chart2" width="0" height="0"></canvas>
 </body>
 </html>

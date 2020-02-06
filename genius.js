@@ -9,12 +9,13 @@ exports.search = (title, artist, callback) => {
     // Search on title
     genius.search(title).then(titleResponse => {
         console.log('Found', titleResponse.hits.length, 'results from', title, 'query');
+        // console.log(titleResponse.hits[0].result);
         // Add songs to list of potential songs
         titleResponse.hits.forEach(item => {
             songList.push({
                 id: item.result.id,
-                title: item.result.full_title,
-                artist: item.result.artist,
+                title: item.result.title_with_featured,
+                artist: item.result.primary_artist.name,
                 thumbnail: item.result.header_image_thumbnail_url,
                 url: item.result.url,
                 doubleMatch: false
@@ -50,7 +51,7 @@ exports.search = (title, artist, callback) => {
             });
             if (doubleMatches.length < 2) {
                 // Return any double matches + regular matches up to 3 total
-                callback(doubleMatches.concat(songList.slice(0, 3 - doubleMatch.length)));     
+                callback(doubleMatches.concat(songList.slice(0, 3 - doubleMatches.length)));     
             }
             else {
                 callback(doubleMatches.slice(0, 3));  // Return just double matches

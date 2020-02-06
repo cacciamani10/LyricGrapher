@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "test": "nodemon server"
+    "test": "nodemon -e ejs,json,js server"
   },
   "author": "Jacob Cacciamani",
   "license": "ISC",
