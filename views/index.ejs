@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
     <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css">
     <title>Lyric Grapher</title>
 </head>
 <body>
@@ -25,28 +26,20 @@
         <input type="text" name="artist" id="artist">
         <input type="submit" value="Search">
     </form>
-    <script>
-        <% if(!lyrics) { let lyrics = '' } %>
-        let getLyrics = <%= lyrics %>;
-        console.log(getLyrics);
-        // if (typeof getLyrics !== 'undefined') {
-
-        //     let barC = new Chart(ctx1, {
-        //         type: 'bar',
-        //         data: data,
-        //         options: options
-        //     });
-        // }
-    </script>
+    
     <canvas id="chart1" width="400" height="400"></canvas>
     <canvas id="chart2" width="400" height="400"></canvas>
     <ul>
         <% if(data !== null) {
             data.forEach(song => {%> 
-                <li><%= JSON.stringify(song.title) %></li> 
-                <button onclick="addSong(' <%= song.url %> ')"></button>
+            <% let thumb = JSON.stringify(song.thumbnail) %>
+            <% let title = JSON.stringify(song.title) %>
+            <div class="search-item">
+                <img src="<%= song.thumbnail %>" alt="Album thumbnail for <%= song.artist %>">
+                <li><%= title %></li> 
+                <button class="add-button" onclick="addSong(' <%= song.url %> ')">+</button>
+            </div>
         <% })} %>
     </ul>
-     
 </body>
 </html>

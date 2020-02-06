@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    //search('Run The Jewels', '');
     res.render(
         'index', 
         { 
@@ -41,13 +40,7 @@ app.get('/song', (req, res) => {
     // Finish imlpementing this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     getLyricsData(
         decodeURI(req.query.url), 
-        lyrics => res.render(
-            'index', 
-            { 
-                data: null,
-                lyrics: lyrics 
-            }
-        )
+        lyrics => res.json(lyrics)
     );
 })
 

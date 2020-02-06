@@ -14,6 +14,7 @@ exports.search = (title, artist, callback) => {
             songList.push({
                 id: item.result.id,
                 title: item.result.full_title,
+                artist: item.result.artist,
                 thumbnail: item.result.header_image_thumbnail_url,
                 url: item.result.url,
                 doubleMatch: false
@@ -48,7 +49,8 @@ exports.search = (title, artist, callback) => {
                 return song.doubleMatch;
             });
             if (doubleMatches.length < 2) {
-                callback(songList.slice(0, 3));     // Return full song list
+                // Return any double matches + regular matches up to 3 total
+                callback(doubleMatches.concat(songList.slice(0, 3 - doubleMatch.length)));     
             }
             else {
                 callback(doubleMatches.slice(0, 3));  // Return just double matches

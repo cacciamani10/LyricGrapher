@@ -28,3 +28,7 @@ const addSong = url => {
         .then(jsnr => console.log(jsnr))
         .catch(err => console.log(err));
 }
+
+const getThumbLink = uri => {
+    return JSON.stringify(uri);
+}

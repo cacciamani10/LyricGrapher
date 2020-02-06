@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const hashString = (word, max) => {
     const c = 34;
     let hash = 0;
@@ -14,7 +16,6 @@ exports.hashTable = (lyricsArr, maxBucket) => {
         let hash = hashString(word, 1000);
         // Location Empty (new word)
         if (typeof table[hash] === 'undefined') {
-            console.log('New word', word, 'added at', hash);
             table[hash] = [{
                 word: word,
                 count: 1
@@ -27,17 +28,14 @@ exports.hashTable = (lyricsArr, maxBucket) => {
             // Iterate through buckets
             for (wordObj of table[hash]) {
                 if (wordObj.word === word) {
-                    console.log('Word', word, 'found second time at', hash);
                     wordObj.count++;
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                console.log('Collison at', hash);
                 collisionCount++;
                 if (table[hash].length <= maxBucket) {
-                    console.log('Pushed word', word, 'at', hash);
                     table[hash].push({
                         word: word,
                         count: 1
@@ -51,5 +49,8 @@ exports.hashTable = (lyricsArr, maxBucket) => {
     }
     console.log('Final size of array:', table.length);
     console.log('Final collision count:', collisionCount);
+    table = table.filter(e => e);
+    
+    return table;
 }
 
