@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const hashString = (word, max) => {
     const c = 34;
     let hash = 0;
@@ -47,7 +45,6 @@ exports.hashTable = (lyricsArr, maxBucket) => {
             }
         }
     }
-    console.log('Final size of array:', table.length);
     console.log('Final collision count:', collisionCount);
     table = table.filter(e => e);
     

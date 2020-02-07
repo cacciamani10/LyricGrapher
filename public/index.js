@@ -1,9 +1,3 @@
-// const validate = () => {
-//     const artist = document.getElementById('artist').innerHTML;
-//     const title = document.getElementById('title').innerHTML;
-//     let ctx1 = document.getElementById('chart1').getContext('2d');
-//     let ctx2 = document.getElementById('chart2').getContext('2d');
-// }
 let lyricsChart = null;
 const addSong = (url, thumbnail) => {
     fetch(`/song?url=${encodeURIComponent(url)}`, 
@@ -54,7 +48,6 @@ const search = (e) => {
     let uri = '/search?';
 
     if (title !== '') {
-        
         if (artist !== '') {
             uri += `title=${title}&artist=${artist}`;
         }
