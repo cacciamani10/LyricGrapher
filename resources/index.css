@@ -6,6 +6,10 @@ body {
     margin: 2em;
 }
 
+ul {
+    padding-inline-start: 0px;
+}
+
 .search-container {
     display: grid;
 }
@@ -24,7 +28,7 @@ body {
 
 .search-item {
     display: block;
-    width: 40vw ;
+    width: 50vw ;
     margin: 5px;
 }
 
@@ -94,4 +98,26 @@ button:focus {
 
 .description {
     font-size: 1.75em;
+}
+
+.search-results {
+    display: flex;
+
+}
+
+.search-result-title, .search-result-artist {
+    list-style-type: none;
+}
+
+.title-artist {
+    margin: 2px;
+}
+
+.search-result-item {
+    display: flex;
+    justify-content: space-between;
+    width: 50vw;
+    border: 3px solid #000;
+    border-right: 0px;
+    margin: 5px;
 }

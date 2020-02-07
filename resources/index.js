@@ -49,19 +49,20 @@ const search = (e) => {
             }
             jsnr.json()
             .then(searchResults => {
-                let ul = document.getElementById('search-results').innerHTML = "";
-                
+                let ul = document.getElementById('search-results');
+                let html = "";
                 searchResults.forEach(item => {
-                    ul += 
-                    `<div class="search-item">
+                    html += 
+                    `<div class="search-result-item">
                         <img src="${item.thumbnail}" height="175" width="175" alt="Album thumbnail for ${item.artist}">
                         <div class="title-artist">
-                            <li>${item.title}</li> 
-                            <li>${item.artist}</li>
+                            <li class="search-result-title">${item.title}</li> 
+                            <li class="search-result-artist">${item.artist}</li>
                         </div>
-                        <button class="add-button" onclick="addSong(${item.url})">+</button>
+                        <button class="add-button" onclick="addSong('${item.url}')">+</button>
                     </div>`
                 })
+                ul.innerHTML = html;
             })
         }).catch(err => console.log(err));
 
