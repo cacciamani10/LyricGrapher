@@ -4,11 +4,42 @@
 //     let ctx1 = document.getElementById('chart1').getContext('2d');
 //     let ctx2 = document.getElementById('chart2').getContext('2d');
 // }
-
-const addSong = url => {
-    fetch(`/song?url=${encodeURIComponent(url)}`)
-        .then(jsnr => console.log(JSON.stringify(jsnr)))
-        .catch(err => console.log(err));
+let lyricsChart = null;
+const addSong = (url, thumbnail) => {
+    fetch(`/song?url=${encodeURIComponent(url)}`, 
+    {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.status !== 200) {
+                console.log('Error fetching: code', response.status);
+                return;
+            }
+            response.json().then(jsrp => {
+                console.log(jsrp);
+                if (lyricsChart !== null) {
+                    lyricsChart.destroy();
+                }
+                let chartContainer = document.getElementById('chart-container');
+                chartContainer.style.height = '90vh';
+                chartContainer.style.width = '90vw';
+                const ctx = document.getElementById('chart1').getContext('2d');
+                let img = new Image()
+                img.src = thumbnail;
+                img.onload = () => {
+                    jsrp.datasets[0].backgroundColor = ctx.createPattern(img, 'repeat');
+                    lyricsChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: jsrp,
+                        options: {}
+                    });
+                }
+            })
+        })
+        .catch(err => console.log(err));    
 }
 
 const getThumbLink = uri => {
@@ -59,32 +90,10 @@ const search = (e) => {
                             <li class="search-result-title">${item.title}</li> 
                             <li class="search-result-artist">${item.artist}</li>
                         </div>
-                        <button class="add-button" onclick="addSong('${item.url}')">+</button>
+                        <button class="add-button" onclick="addSong('${item.url}', '${item.thumbnail}')">+</button>
                     </div>`
                 })
                 ul.innerHTML = html;
             })
         }).catch(err => console.log(err));
-
 }
-
-
-
-/*
-
-        <% if(data !== null) {
-            data.forEach(song => {%> 
-            <% let thumb = JSON.stringify(song.thumbnail) %>
-            <% let title = JSON.stringify(song.title) %>
-            <% let artist = JSON.stringify(song.artist) %>
-            <div class="search-item">
-                <img src="<%= song.thumbnail %>" height="175" width="175" alt="Album thumbnail for <%= artist %>">
-                <div class="title-artist">
-                    <li><%= title %></li> 
-                    <li><%= artist %></li>
-                </div>
-                <button class="add-button" onclick="addSong(' <%= song.url %> ')">+</button>
-            </div>
-        <% })} %>
-
-    */

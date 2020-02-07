@@ -28,7 +28,10 @@ app.get('/song', (req, res) => {
     // Finish imlpementing this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     getLyricsData(
         decodeURI(req.query.url), 
-        lyrics => res.json(lyrics)
+        lyrics => {
+            console.log('Sending data:', lyrics);
+            res.json(lyrics);
+        }
     );
 })
 
