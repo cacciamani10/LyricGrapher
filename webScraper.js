@@ -8,7 +8,8 @@ exports.getLyricsData = (uri, callback) => {
     request(uri, (error, response, html) => {
         if (!error && response.statusCode == 200) {
             const $ = cheerio.load(html);
-            let lyrics = $('.lyrics').css({ 'font-size': '1.125em'}).text();
+            $('main').css({ 'font': '100 1.125rem / 1.5 Programme, Arial, sans-serif'}).find('br').replaceWith('\n')
+            let lyrics = $('div[data-scrolltrigger-pin="true"]').css({ 'font': '100 1.125rem / 1.5 Programme, Arial, sans-serif'}).text();
             lyrics = getWordData(lyrics);
             callback(lyrics);
         }
